@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Biblioteca</title>
+</head>
+<body>
+    <h1>Cadastro de Livros</h1>
+    <div class="buttons">
+        <button id="btnAdicionar" onclick="adicionarLivro()">Adicionar Livro</button>
+        <button id="btnApagar" onclick="apagarLivros()">Apagar Registros</button>
+        <button id="btnMostrar" onclick="mostrarLivros()">Mostrar Livros</button>
+    </div>
+    <p id="livros-cadastrados">Não há livros cadastrados.</p>
+    <div id="carrossel" class="carousel"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<script>
+    let biblioteca = [];
+
+function adicionarLivro() {
+    const nome = prompt("Nome do livro:");
+    const autor = prompt("Autor do livro:");
+    const ano = prompt("Ano do livro:");
+
+    if (nome && autor && ano) {
+        const livro = {
+            titulo: nome, 
+            autor: autor, 
+            ano: ano
+        };
+        biblioteca.push(livro);
+        atualizarCarrossel();
+        atualizarQuantidadeLivros();
+    }
+}
+
+function apagarLivros() {
+    biblioteca = [];
+    atualizarCarrossel();
+    atualizarQuantidadeLivros();
+}
+
+function mostrarLivros() {
+    const livrosInfo = biblioteca.map(livro => `Título: ${livro.titulo}, Autor: ${livro.autor}, Ano: ${livro.ano}`);
+    const resultado = livrosInfo.length > 0 ? livrosInfo.join('\n') : "Não há livros cadastrados.";
+    alert(resultado);
+}
+
+function atualizarQuantidadeLivros() {
+    const quantidadeLivrosElement = document.getElementById('livros-cadastrados');
+    quantidadeLivrosElement.textContent = `Quantidade de livros cadastrados: ${biblioteca.length}`;
+}
+
+function atualizarCarrossel() {
+    const carrossel = document.getElementById('carrossel');
+    carrossel.innerHTML = "";
+
+    for (const livro of biblioteca) {
+        const novaImagem = document.createElement('img');
+        novaImagem.src = `livro.jpg`; 
+        carrossel.appendChild(novaImagem);
+    }
+}
+
+</script>
+
+    
+</body>
+</html>
